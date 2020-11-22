@@ -1,10 +1,12 @@
 import { Input } from '@material-ui/core'
 import React from 'react'
 import './Home.css'
+import Header from './Header';
 
 const Home = () => {
     return (
         <div className="home">
+            <Header />
             <video src="/assets/bg-video.mp4" autoPlay loop muted></video>
             <div className="home-content">
                 <h1>ADVENTURE AWAITS</h1>

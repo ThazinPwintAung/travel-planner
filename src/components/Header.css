@@ -1,15 +1,14 @@
 .navbar {
     background: transparent;
-    background-color: #8A8F84;
-    height: 60px;
+    height: 80px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 2rem;
+    padding: 2rem 2rem;
 }
 
 .navbar h2{
-    color: var(--pink);
+    color: var(--blue);
     font-size: 30px;
     font-weight: 600;
     letter-spacing: 1px;
@@ -31,9 +30,7 @@
     color: var(--darkblue);
     padding: 8px 0 5px 0;
     font-size: 18px;
-    font-weight: 600;
     letter-spacing: 1px;
-    text-shadow: rgba(0, 30, 40, 0.1) 1px 4px 10px;
     transition: all 200ms ease-out;
 }
 
