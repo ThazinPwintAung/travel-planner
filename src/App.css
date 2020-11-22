@@ -3,4 +3,16 @@
   padding: 0;
   box-sizing: border-box;
   font-weight: normal;
+  font-family: 'Nunito', sans-serif;
+}
+
+:root {
+  --lightblue: #A3ABBA;
+  --darkblue: #282D36;
+  --blue: #0E7DBF;
+  --gray: #E4E4E4;
+  --pink: #FF7573;
+  --green: #39CB5B;
+  --coral: #FFC276;
+  --white: #ffffff;
 }
