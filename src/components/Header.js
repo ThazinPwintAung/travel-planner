@@ -20,7 +20,7 @@ const Header = () => {
                     <h4>Contact</h4>
                 </div>
             </div>
-            <Button style={{backgroundColor: "#0E7DBF", color:"#ffff"}} variant="contained">Book a flight</Button>
+            <Button style={{backgroundColor: "#ce4846"}} variant="contained">Book a flight</Button>
         </div>
     )
 }

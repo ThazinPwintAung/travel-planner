@@ -9,7 +9,7 @@
 }
 
 .navbar h2{
-    color: var(--blue);
+    color: var(--pink);
     font-size: 30px;
     font-weight: 600;
     letter-spacing: 1px;
@@ -28,9 +28,10 @@
 }
 
 .menu > h4 {
-    color: var(--white);
+    color: var(--darkblue);
     padding: 8px 0 5px 0;
     font-size: 18px;
+    font-weight: 600;
     letter-spacing: 1px;
     text-shadow: rgba(0, 30, 40, 0.1) 1px 4px 10px;
     transition: all 200ms ease-out;
