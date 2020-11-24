@@ -1,28 +1,28 @@
-import { Button } from '@material-ui/core';
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import './Header.css'
+import './Navbar.css'
 
-const Header = () => {
+const Navbar = () => {
     const history = useHistory();
-    const routeTo = () => history.push("/");
+    const routeToHome = () => history.push("/");
     return (
         <div className="navbar">
-            <h2 onClick={routeTo}>Explore.co</h2>
+            <div className="logo">
+                <h2 onClick={routeToHome}>Explore.co</h2>
+            </div>
             <div className="nav-menu">
                 <div className="menu">
-                    <h4>Home</h4>
+                    <h4 onClick={routeToHome}>Home</h4>
                 </div>
                 <div className="menu">
                     <h4>About</h4>
                 </div>
                 <div className="menu">
-                    <h4>Contact</h4>
+                    <h4>Guide</h4>
                 </div>
             </div>
-            <Button style={{backgroundColor: "#ce4846"}} variant="contained">Book a flight</Button>
         </div>
     )
 }
 
-export default Header
+export default Navbar
