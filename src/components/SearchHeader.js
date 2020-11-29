@@ -1,82 +1,109 @@
-import { Fab } from '@material-ui/core';
-import React, { useState } from 'react';
-import Axios from 'axios';
-import { makeStyles } from '@material-ui/core/styles';
-import './SearchHeader.css';
-import { useHistory } from 'react-router-dom';
-import DeveloperBoardIcon from '@material-ui/icons/DeveloperBoard';
-import {connect} from 'react-redux';
-import {fetchActivities} from '../redux/TravelBoard/travelboard-actions';
+import { Fab } from "@material-ui/core";
+import React, { useState } from "react";
+import Axios from "axios";
+import { makeStyles } from "@material-ui/core/styles";
+import "./SearchHeader.css";
+import { useHistory } from "react-router-dom";
+import DeveloperBoardIcon from "@material-ui/icons/DeveloperBoard";
+import { connect } from "react-redux";
+import { fetchActivities } from "../redux/TravelBoard/travelboard-actions";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-          margin: theme.spacing(1),
-        },
-    },
-    extendedIcon: {
-        marginRight: theme.spacing(1),
-    },
+  extendedIcon: {
+    marginRight: theme.spacing(1),
+  },
 }));
 
-const API_ACCESS_KEY = '9717d5a7bb89147bf20c2d2ebbd33d76';
-const SearchHeader = ({fetchActivities}) => {
-    const [input, setInput] = useState("");
+const API_ACCESS_KEY = "9717d5a7bb89147bf20c2d2ebbd33d76";
+const SearchHeader = ({ fetchActivities }) => {
+  const [input, setInput] = useState("");
 
-    const classes = useStyles();
-    const history = useHistory();
-    const routeToHome = () => history.push("/");
+  const classes = useStyles();
+  const history = useHistory();
+  const routeToHome = () => history.push("/");
 
-    const fetchGeocode = () => {
-        Axios.get(`http://api.positionstack.com/v1/forward?access_key=${API_ACCESS_KEY}&query=${input}`)
-            .then(response => {
-                console.log(response.data.data);
-                const geoArr = response.data.data;
-                console.log(geoArr[0]);
-                fetchActivities(geoArr[0]);
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    };
+  const fetchGeocodeAndActivityList = async () => {
+    try {
+      const response = await Axios.get(
+        `http://api.positionstack.com/v1/forward?access_key=${API_ACCESS_KEY}&query=${input}`
+      );
+      console.log(response.data.data);
+      const geoArr = response.data.data;
+      console.log(geoArr[0]);
 
-    const onSearchHandler = (event) => {
-        event.preventDefault();
+      const cred = {
+        clientId: "qV54lPA6hBxejskCSg0BTedeLeOgFAsL",
+        clientSecret: "8FjjGLeQCzbh15Lt",
+      };
 
-        fetchGeocode();
-    };
+      const tokenResp = await Axios.post(
+        "https://test.api.amadeus.com/v1/security/oauth2/token",
+        `grant_type=client_credentials&client_id=${cred.clientId}&client_secret=${cred.clientSecret}`
+      );
 
-    return (
-        <div className="search-header">
-            <div className="navbar">
-                <h2 onClick={routeToHome}>Explore<small>.co</small></h2>
-                <Fab variant="extended" color="primary" >
-                    <DeveloperBoardIcon className={classes.extendedIcon}/>
-                    My TravelBoard
-                </Fab>
-            </div>
-            <div className="searchpage-content">
-                <h1>Create Your TravelBoard Here</h1>
-                <p>Search your destination by city name & discover the available tours and activities in the region</p>
-                <form className="search-bar" onSubmit={onSearchHandler}>
-                    <input type="text" placeholder="eg.Bali" 
-                    value={input} onChange={event => setInput(event.target.value)} />
-                </form>
-            </div>   
-        </div>
-    )
-}
+      console.log({ tokenResp });
 
-const mapStateToProps = state => {
-    return {
-        activityLists: state.activity
-    };
+      const actListResp = await Axios.get(
+        `https://test.api.amadeus.com/v1/shopping/activities?latitude=${geoArr[0].latitude}&longitude=${geoArr[0].longitude}&radius=20`,
+        {
+          headers: {
+            Authorization:
+              tokenResp.data.token_type + " " + tokenResp.data.access_token,
+          },
+        }
+      );
+      console.log({ actListResp });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onSearchHandler = (event) => {
+    event.preventDefault();
+
+    fetchGeocodeAndActivityList();
+  };
+
+  return (
+    <div className="search-header">
+      <div className="navbar">
+        <h2 onClick={routeToHome}>
+          Explore<small>.co</small>
+        </h2>
+        <Fab variant="extended" color="primary">
+          <DeveloperBoardIcon className={classes.extendedIcon} />
+          My TravelBoard
+        </Fab>
+      </div>
+      <div className="searchpage-content">
+        <h1>Create Your TravelBoard Here</h1>
+        <p>
+          Search your destination by city name & discover the available tours
+          and activities in the region
+        </p>
+        <form className="search-bar" onSubmit={onSearchHandler}>
+          <input
+            type="text"
+            placeholder="eg.Bali"
+            value={input}
+            onChange={(event) => setInput(event.target.value)}
+          />
+        </form>
+      </div>
+    </div>
+  );
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        fetchActivities: () => dispatch(fetchActivities())
-    }
-}
+const mapStateToProps = (state) => {
+  return {
+    activityLists: state.activity,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchActivities: (loc) => dispatch(fetchActivities(loc)),
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchHeader);
