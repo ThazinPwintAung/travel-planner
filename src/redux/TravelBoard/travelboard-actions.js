@@ -1,26 +1,45 @@
 import * as actionTypes from './travelboard-types';
 
-export const addToTravelboard = (actID) => {
+export const fetchActivitiesRequest = () => {
     return {
-        type: actionTypes.ADD_TO_TRAVELBOARD,
-        payload: {
-            id: actID,
-        },
+        type: actionTypes.FETCH_ACTIVITIES_REQUEST,
+
     };
 };
 
-export const removeFromTravelboard = (actID) => {
+export const fetchActivitiesSuccess = (activities) => {
     return {
-        type: actionTypes.REMOVE_FROM_TRAVELBOARD,
-        payload: {
-            id: actID,
-        },
+        type: actionTypes.FETCH_ACTIVITIES_SUCCESS,
+        payload: activities,
     };
 };
 
-export const loadCurrentActivity = (activity) => {
+export const fetchActivitiesFailure = error => {
     return {
-        type: actionTypes.LOAD_CURRENT_ACTIVITY,
-        payload: activity,
+        type: actionTypes.FETCH_ACTIVITIES_FAILURE,
+        payload: error,
     };
 };
+
+export const fetchActivities = ({latitude, longitude}) => {
+    return (dispatch) => {
+        dispatch(fetchActivitiesRequest)
+        var Amadeus = require("amadeus");
+        var amadeus = new Amadeus({
+            clientId: 'qV54lPA6hBxejskCSg0BTedeLeOgFAsL',
+            clientSecret: '8FjjGLeQCzbh15Lt',
+        });
+
+        amadeus.shopping.activities.get({
+            latitude: latitude,
+            longitude: longitude,
+        }).then(response => {
+            console.log(response.result.data);
+            const activities = response.result.data;
+            dispatch(fetchActivitiesSuccess(activities));
+        }).catch(error => {
+            const errorMsg = error.message;
+            dispatch(fetchActivitiesFailure(errorMsg));
+        });
+    }
+}

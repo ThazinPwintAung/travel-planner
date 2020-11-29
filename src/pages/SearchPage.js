@@ -1,12 +1,12 @@
 import React from 'react'
-import ActivityCard from '../components/ActivityCard'
+import ResultWrapper from '../components/ResultWrapper'
 import SearchHeader from '../components/SearchHeader'
 
 const SearchPage = () => {
     return (
         <div>
             <SearchHeader />
-            <ActivityCard />
+            <ResultWrapper />
         </div>
     )
 }

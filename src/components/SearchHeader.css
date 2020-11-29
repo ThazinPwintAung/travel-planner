@@ -1,0 +1,30 @@
+.search-header {
+  width: 100%;
+  height: 280px;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.search-header .searchpage-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-header .searchpage-content > h1 {
+  color: var(--darkblue);
+  font-size: 40px;
+  font-weight: 600;
+  padding-top: 10px;
+  margin-bottom: 6px;
+  letter-spacing: 2px;
+  text-shadow: rgba(0, 30, 40, 0) 1px 4px 10px;
+}
+
+.search-header .searchpage-content > p {
+  color: var(--darkblue);
+  font-size: 16px;
+  margin-bottom: 10px;
+}

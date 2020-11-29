@@ -8,7 +8,7 @@ const Navbar = () => {
     return (
         <div className="navbar">
             <div className="logo">
-                <h2 onClick={routeToHome}>Explore.co</h2>
+                <h2 onClick={routeToHome}>Explore<small>.co</small></h2>
             </div>
             <div className="nav-menu">
                 <div className="menu">
