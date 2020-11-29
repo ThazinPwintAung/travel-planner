@@ -58,10 +58,9 @@ const SearchHeader = ({fetchActivities}) => {
             <div className="searchpage-content">
                 <h1>Create Your TravelBoard Here</h1>
                 <p>Search your destination by city name & discover the available tours and activities in the region</p>
-                <form className="search-bar">
-                    <input type="text" placeholder="eg. Bali" 
+                <form className="search-bar" onSubmit={onSearchHandler}>
+                    <input type="text" placeholder="eg.Bali" 
                     value={input} onChange={event => setInput(event.target.value)} />
-                    <button  onClick={onSearchHandler}>SEARCH</button>
                 </form>
             </div>   
         </div>
