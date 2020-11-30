@@ -1,0 +1,22 @@
+.SearchPage .searchpage-content {
+  opacity: 0;
+  transform: translate(0, 150px);
+  animation: fadeUp 300ms ease-out forwards;
+}
+
+.SearchPage .wrapper {
+  opacity: 0;
+  transform: translate(0, 150px);
+  animation: fadeUp 350ms 150ms ease-out forwards;
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translate(0, 150px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
