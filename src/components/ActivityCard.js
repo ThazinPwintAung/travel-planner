@@ -1,82 +1,91 @@
-import React from 'react';
-import cx from 'clsx'
-import { Box, Card, CardContent, CardMedia, IconButton, makeStyles, Typography, Button } from '@material-ui/core';
-import { useWideCardMediaStyles } from '@mui-treasury/styles/cardMedia/wide';
-import { useFadedShadowStyles } from '@mui-treasury/styles/shadow/faded';
-import { usePushingGutterStyles } from '@mui-treasury/styles/gutter/pushing';
-import Favorite from '@material-ui/icons/Favorite'
-import { LocationOn } from '@material-ui/icons';
-import Rating from '@material-ui/lab/Rating'
-import CardActions from '@material-ui/core/CardActions';
-
+import {
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  IconButton,
+  makeStyles,
+  Typography,
+  Box,
+  Button,
+} from "@material-ui/core";
+import React, { useState } from "react";
+import { addToBoard } from "../redux/TravelBoard/travelboard-actions";
+import { connect } from "react-redux";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 const useStyles = makeStyles(() => ({
-    root: {
-        overflow: 'initial',
-        maxWidth: 280,
-        backgroundColor: 'transparent',
-    },
-    title: {
-        marginBottom: 0,
-    },
-    rateValue: {
-        fontWeight: 'bold',
-        marginTop: 2,
-    },
-    content: {
-        position: 'relative',
-        padding: 24,
-        margin: '-24% 16px 0',
-        backgroundColor: '#fff',
-        borderRadius: 4,
-    },
-    favorite: {
-        position: 'absolute',
-        top: 12,
-        right: 12,
-    },
-    locationIcon: {
-        marginRight: 4,
-        fontSize: 18,
-    },
+  root: {
+    display: "flex",
+    width: "100%",
+    margin: 20,
+  },
+  details: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  content: {
+    flex: "1 0 auto",
+  },
+  cover: {
+    minWidth: 300,
+  },
+  typography: {
+    fontSize: 14,
+    fontWeight: 900,
+    marginRight: 30,
+  },
 }));
 
-const ActivityCard = () => {
-    const styles = useStyles();
-    const mediaStyles = useWideCardMediaStyles();
-    const shadowStyles = useFadedShadowStyles();
-    const gutterStyles = usePushingGutterStyles({ firstExcluded: true });
-    return (
-        <Card className={styles.root}>
-            <CardMedia 
-                classes={mediaStyles}
-                image={'https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80'} //to pass from api
-            />
-            <CardContent className={cx(shadowStyles.root, styles.content)}>
-                <IconButton className={styles.favorite}>
-                    <Favorite />
-                </IconButton>
-                <h3 className={styles.title}>Colloseo</h3>
-                <Box color={'grey.500'} display={'flex'} alignItems={'center'} mb={1}>
-                    <LocationOn className={styles.locationIcon} />
-                    <span>Rome</span>
-                </Box>
-                <Box  display={'flex'} alignItems={'center'} mb={1} className={gutterStyles.parent}>
-                    <Rating name={'rating'} value={2} size={'small'}/>
-                    <Typography variant={'body2'} className={styles.rateValue}>4.0</Typography>
-                </Box>
-                <Typography color={'textSecondary'} variant={'body2'}>
-                    Talking about travelling or new jobs, many people often think of
-                    change of environment...
-                </Typography>
-            </CardContent>
-            <CardActions>
-                <Button size="small" color="primary" fontWeight={'bold'}>
-                    Book Here
-                </Button>
-            </CardActions>
-        </Card>
-    )
-}
+const ActivityCard = ({ actList, addToBoard }) => {
+  const [clickedFav, setClickedFav] = useState(false);
+  const classes = useStyles();
+  const imgSrc = actList.pictures[0];
 
-export default ActivityCard
+  const addToTravelboard = () => {
+    setClickedFav(!clickedFav);
+    addToBoard(actList);
+  };
+  return (
+    <Card className={classes.root}>
+      <CardMedia
+        className={classes.cover}
+        image={imgSrc}
+        title={actList.name}
+      />
+      <div className={classes.details}>
+        <CardContent className={classes.content}>
+          <Typography component="h6" variant="h6">
+            {actList.name}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {actList.shortDescription}
+          </Typography>
+          <Box display={"flex"} alignItems={"center"} mt={2}>
+            <Typography className={classes.typography}>
+              Price:&nbsp;{actList.price.amount}&nbsp;
+              {actList.price.currencyCode}{" "}
+            </Typography>
+            <Typography className={classes.typography}>
+              Rating:&nbsp;{actList.rating}
+            </Typography>
+          </Box>
+          <CardActions>
+            <IconButton
+              aria-label="add to travelborad"
+              onClick={addToTravelboard}
+            >
+              {clickedFav ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            </IconButton>
+            <Button size="small" color="primary">
+              <a href={actList.bookingLink}>Book Here!</a>
+            </Button>
+          </CardActions>
+        </CardContent>
+      </div>
+    </Card>
+  );
+};
+
+export default connect(null, { addToBoard })(ActivityCard);

@@ -1,45 +1,15 @@
-import * as actionTypes from './travelboard-types';
+import * as actionTypes from "./travelboard-types";
 
-export const fetchActivitiesRequest = () => {
-    return {
-        type: actionTypes.FETCH_ACTIVITIES_REQUEST,
-
-    };
+export const addToBoard = (act) => {
+  return {
+    type: actionTypes.ADD_TO_BOARD,
+    payload: act,
+  };
 };
 
-export const fetchActivitiesSuccess = (activities) => {
-    return {
-        type: actionTypes.FETCH_ACTIVITIES_SUCCESS,
-        payload: activities,
-    };
+export const removeFromBoard = (cardId) => {
+  return {
+    type: actionTypes.REMOVE_FROM_BOARD,
+    payload: cardId,
+  };
 };
-
-export const fetchActivitiesFailure = error => {
-    return {
-        type: actionTypes.FETCH_ACTIVITIES_FAILURE,
-        payload: error,
-    };
-};
-
-export const fetchActivities = ({latitude, longitude}) => {
-    return (dispatch) => {
-        dispatch(fetchActivitiesRequest)
-        var Amadeus = require("amadeus");
-        var amadeus = new Amadeus({
-            clientId: 'qV54lPA6hBxejskCSg0BTedeLeOgFAsL',
-            clientSecret: '8FjjGLeQCzbh15Lt',
-        });
-
-        amadeus.shopping.activities.get({
-            latitude: latitude,
-            longitude: longitude,
-        }).then(response => {
-            console.log(response.result.data);
-            const activities = response.result.data;
-            dispatch(fetchActivitiesSuccess(activities));
-        }).catch(error => {
-            const errorMsg = error.message;
-            dispatch(fetchActivitiesFailure(errorMsg));
-        });
-    }
-}

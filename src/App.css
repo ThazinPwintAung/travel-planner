@@ -3,16 +3,17 @@
   padding: 0;
   box-sizing: border-box;
   font-weight: normal;
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
+  text-decoration: none;
 }
 
 :root {
-  --lightblue: #A3ABBA;
-  --darkblue: #282D36;
+  --lightblue: #a3abba;
+  --darkblue: #282d36;
   --blue: #0a4e75;
-  --gray: #E4E4E4;
+  --gray: #e4e4e4;
   --pink: #ce4846;
-  --green: #39CB5B;
-  --coral: #FFC276;
+  --green: #39cb5b;
+  --coral: #ffc276;
   --white: #ffffff;
 }
