@@ -1,24 +1,17 @@
-import { Fab } from "@material-ui/core";
+import { Badge, Typography } from "@material-ui/core";
 import React, { useState } from "react";
 import Axios from "axios";
-import { makeStyles } from "@material-ui/core/styles";
 import "./SearchPage.css";
 import { useHistory } from "react-router-dom";
-import DeveloperBoardIcon from "@material-ui/icons/DeveloperBoard";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 import ActivityCard from "../components/ActivityCard";
-
-const useStyles = makeStyles((theme) => ({
-  extendedIcon: {
-    marginRight: theme.spacing(1),
-  },
-}));
 
 const API_ACCESS_KEY = "9717d5a7bb89147bf20c2d2ebbd33d76";
 const SearchHeader = () => {
   const [input, setInput] = useState("");
   const [activityLists, setActivityLists] = useState([]);
+  const [invisible, setInvisible] = useState(true);
 
-  const classes = useStyles();
   const history = useHistory();
   const routeToHome = () => history.push("/");
 
@@ -72,10 +65,9 @@ const SearchHeader = () => {
           <h2 onClick={routeToHome}>
             Explore<small>.co</small>
           </h2>
-          <Fab variant="extended" color="primary">
-            <DeveloperBoardIcon className={classes.extendedIcon} />
-            My TravelBoard
-          </Fab>
+          <Badge color="secondary" variant="dot" invisible={invisible}>
+            <FavoriteIcon />
+          </Badge>
         </div>
         <div className="searchpage-content">
           <h1>Create Your TravelBoard Here</h1>
@@ -94,6 +86,7 @@ const SearchHeader = () => {
         </div>
       </div>
       <div className="ResultWrapper">
+        {activityLists && <div className="category"></div>}
         {activityLists.length > 0 &&
           activityLists.map((list) => (
             <ActivityCard key={list.id} actList={list} city={input} />
