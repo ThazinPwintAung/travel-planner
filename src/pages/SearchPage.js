@@ -1,19 +1,27 @@
-import { Badge, Typography } from "@material-ui/core";
+import { Badge, IconButton, makeStyles } from "@material-ui/core";
 import React, { useState } from "react";
 import Axios from "axios";
 import "./SearchPage.css";
 import { useHistory } from "react-router-dom";
-import FavoriteIcon from "@material-ui/icons/Favorite";
+import CardTravelIcon from "@material-ui/icons/CardTravel";
 import ActivityCard from "../components/ActivityCard";
 
 const API_ACCESS_KEY = "9717d5a7bb89147bf20c2d2ebbd33d76";
+const useStyles = makeStyles((theme) => ({
+  largeIcon: {
+    "& svg": {
+      fontSize: 30,
+    },
+  },
+}));
 const SearchHeader = () => {
   const [input, setInput] = useState("");
   const [activityLists, setActivityLists] = useState([]);
   const [invisible, setInvisible] = useState(true);
-
+  const classes = useStyles();
   const history = useHistory();
   const routeToHome = () => history.push("/");
+  const routeToTravelboard = () => history.push("/mytravelboard");
 
   const fetchGeocodeAndActivityList = async () => {
     try {
@@ -60,15 +68,23 @@ const SearchHeader = () => {
 
   return (
     <div>
-      <div className="search-header">
-        <div className="navbar">
-          <h2 onClick={routeToHome}>
-            Explore<small>.co</small>
-          </h2>
+      <div className="navbar">
+        <h2 onClick={routeToHome}>
+          Explore<small>.co</small>
+        </h2>
+
+        <IconButton
+          color="primary"
+          aria-label="add to board"
+          className={classes.largeIcon}
+          onClick={routeToTravelboard}
+        >
           <Badge color="secondary" variant="dot" invisible={invisible}>
-            <FavoriteIcon />
+            <CardTravelIcon />
           </Badge>
-        </div>
+        </IconButton>
+      </div>
+      <div className="search-header">
         <div className="searchpage-content">
           <h1>Create Your TravelBoard Here</h1>
           <p>
@@ -89,7 +105,11 @@ const SearchHeader = () => {
         {activityLists && <div className="category"></div>}
         {activityLists.length > 0 &&
           activityLists.map((list) => (
-            <ActivityCard key={list.id} actList={list} city={input} />
+            <ActivityCard
+              key={list.id}
+              actList={list}
+              setInvisible={setInvisible}
+            />
           ))}
       </div>
     </div>

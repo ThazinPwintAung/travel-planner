@@ -1,9 +1,14 @@
 .search-header {
   width: 100%;
-  height: 280px;
+  height: 200px;
   background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
 }
 
 .search-header .searchpage-content {
@@ -44,7 +49,6 @@
 }
 
 .ResultWrapper {
-  margin-top: 30px;
   margin-left: 15vw;
   margin-right: 15vw;
   margin-bottom: 30px;
