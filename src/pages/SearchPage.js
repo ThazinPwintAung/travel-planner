@@ -5,8 +5,14 @@ import "./SearchPage.css";
 import { useHistory } from "react-router-dom";
 import CardTravelIcon from "@material-ui/icons/CardTravel";
 import ActivityCard from "../components/ActivityCard";
+import PointOfInterestCard from "../components/PointOfInterestCard";
 
 const API_ACCESS_KEY = "9717d5a7bb89147bf20c2d2ebbd33d76";
+const cred = {
+  clientId: "qV54lPA6hBxejskCSg0BTedeLeOgFAsL",
+  clientSecret: "8FjjGLeQCzbh15Lt",
+};
+
 const useStyles = makeStyles((theme) => ({
   largeIcon: {
     "& svg": {
@@ -17,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 const SearchHeader = () => {
   const [input, setInput] = useState("");
   const [activityLists, setActivityLists] = useState([]);
+  const [pointLists, setPointLists] = useState([]);
   const [invisible, setInvisible] = useState(true);
   const [toursActive, setToursActive] = useState(true);
   const [interestsActive, setInterestsActive] = useState(false);
@@ -57,11 +64,6 @@ const SearchHeader = () => {
       const geoArr = response.data.data;
       console.log(geoArr[0]);
 
-      const cred = {
-        clientId: "qV54lPA6hBxejskCSg0BTedeLeOgFAsL",
-        clientSecret: "8FjjGLeQCzbh15Lt",
-      };
-
       const tokenResp = await Axios.post(
         "https://test.api.amadeus.com/v1/security/oauth2/token",
         `grant_type=client_credentials&client_id=${cred.clientId}&client_secret=${cred.clientSecret}`
@@ -80,6 +82,18 @@ const SearchHeader = () => {
       );
       console.log({ actListResp });
       setActivityLists(actListResp.data.data);
+
+      const intResp = await Axios.get(
+        `https://test.api.amadeus.com/v1/reference-data/locations/pois?latitude=${geoArr[0].latitude}&longitude=${geoArr[0].longitude}&radius=1&page%5Blimit%5D=20&page%5Boffset%5D=0`,
+        {
+          headers: {
+            Authorization:
+              tokenResp.data.token_type + " " + tokenResp.data.access_token,
+          },
+        }
+      );
+      console.log({ intResp });
+      setPointLists(intResp.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -148,6 +162,17 @@ const SearchHeader = () => {
                 setInvisible={setInvisible}
               />
             ))}
+          <div className="pointOfInterest">
+            {pointLists.length > 0 &&
+              interestsActive &&
+              pointLists.map((list) => (
+                <PointOfInterestCard
+                  key={list.id}
+                  intList={list}
+                  setInvisible={setInvisible}
+                />
+              ))}
+          </div>
         </div>
       )}
     </div>

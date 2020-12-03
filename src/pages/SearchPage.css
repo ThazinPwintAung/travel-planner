@@ -64,6 +64,11 @@
   margin-bottom: 30px;
 }
 
+.pointOfInterest {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .categoryMenu {
   display: flex;
 }
