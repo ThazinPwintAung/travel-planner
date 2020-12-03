@@ -44,8 +44,9 @@ const useStyles = makeStyles((theme) => ({
   },
   typography: {
     fontSize: 16,
+    fontWeight: 900,
     marginRight: 30,
-    color: "#ba000d",
+    color: "#282d36",
   },
   snackbar: {
     position: "absolute",
@@ -54,9 +55,10 @@ const useStyles = makeStyles((theme) => ({
   book: {
     fontSize: 14,
     fontWeight: 900,
+    color: "#0a4e75",
   },
   star: {
-    color: "#ba000d",
+    color: "#282d36",
   },
 }));
 
@@ -139,7 +141,7 @@ const ActivityCard = ({ actList, addToBoard, setInvisible }) => {
                 </Alert>
               )}
             </Snackbar>
-            <Button size="small" color="primary">
+            <Button size="small">
               <a href={actList.bookingLink} className={classes.book}>
                 Book Here!
               </a>

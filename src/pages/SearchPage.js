@@ -18,10 +18,35 @@ const SearchHeader = () => {
   const [input, setInput] = useState("");
   const [activityLists, setActivityLists] = useState([]);
   const [invisible, setInvisible] = useState(true);
+  const [toursActive, setToursActive] = useState(true);
+  const [interestsActive, setInterestsActive] = useState(false);
+  const [safeActive, setSafeActive] = useState(false);
   const classes = useStyles();
   const history = useHistory();
   const routeToHome = () => history.push("/");
   const routeToTravelboard = () => history.push("/mytravelboard");
+
+  let tourIsActive = toursActive ? "active" : "";
+  let interestIsActive = interestsActive ? "active" : "";
+  let safeIsActive = safeActive ? "active" : "";
+
+  const toursAndActivities = () => {
+    setToursActive(true);
+    setInterestsActive(false);
+    setSafeActive(false);
+  };
+
+  const pointsOfInterest = () => {
+    setToursActive(false);
+    setInterestsActive(true);
+    setSafeActive(false);
+  };
+
+  const safePlaces = () => {
+    setToursActive(false);
+    setInterestsActive(false);
+    setSafeActive(true);
+  };
 
   const fetchGeocodeAndActivityList = async () => {
     try {
@@ -101,17 +126,30 @@ const SearchHeader = () => {
           </form>
         </div>
       </div>
-      <div className="ResultWrapper">
-        {activityLists && <div className="category"></div>}
-        {activityLists.length > 0 &&
-          activityLists.map((list) => (
-            <ActivityCard
-              key={list.id}
-              actList={list}
-              setInvisible={setInvisible}
-            />
-          ))}
-      </div>
+      {activityLists.length > 0 && (
+        <div className="ResultWrapper">
+          <div className="categoryMenu nav-menu">
+            <div className="menu" onClick={toursAndActivities}>
+              <h4 className={tourIsActive}>Tours & Activities</h4>
+            </div>
+            <div className="menu" onClick={pointsOfInterest}>
+              <h4 className={interestIsActive}>Points of Interest</h4>
+            </div>
+            <div className="menu" onClick={safePlaces}>
+              <h4 className={safeIsActive}>Safe Places</h4>
+            </div>
+          </div>
+          {activityLists.length > 0 &&
+            toursActive &&
+            activityLists.map((list) => (
+              <ActivityCard
+                key={list.id}
+                actList={list}
+                setInvisible={setInvisible}
+              />
+            ))}
+        </div>
+      )}
     </div>
   );
 };
