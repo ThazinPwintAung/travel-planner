@@ -14,6 +14,7 @@ import React, { useState } from "react";
 import { addToBoard } from "../redux/TravelBoard/travelboard-actions";
 import { connect } from "react-redux";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import MuiAlert from "@material-ui/lab/Alert";
 
@@ -42,13 +43,20 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 300,
   },
   typography: {
-    fontSize: 14,
-    fontWeight: 900,
+    fontSize: 16,
     marginRight: 30,
+    color: "#ba000d",
   },
   snackbar: {
     position: "absolute",
     top: 0,
+  },
+  book: {
+    fontSize: 14,
+    fontWeight: 900,
+  },
+  star: {
+    color: "#ba000d",
   },
 }));
 
@@ -93,12 +101,15 @@ const ActivityCard = ({ actList, addToBoard, setInvisible }) => {
           </Typography>
           <Box display={"flex"} alignItems={"center"} mt={2}>
             <Typography className={classes.typography}>
-              Price:&nbsp;{actList.price.amount}&nbsp;
+              {actList.price.amount}&nbsp;
               {actList.price.currencyCode}{" "}
             </Typography>
-            <Typography className={classes.typography}>
-              Rating:&nbsp;{actList.rating}
-            </Typography>
+            <Box display={"flex"} alignItems={"center"}>
+              <StarBorderIcon className={classes.star} />
+              <Typography className={classes.typography}>
+                &nbsp;{parseFloat(actList.rating).toFixed(1)}
+              </Typography>
+            </Box>
           </Box>
           <CardActions>
             <IconButton
@@ -129,7 +140,9 @@ const ActivityCard = ({ actList, addToBoard, setInvisible }) => {
               )}
             </Snackbar>
             <Button size="small" color="primary">
-              <a href={actList.bookingLink}>Book Here!</a>
+              <a href={actList.bookingLink} className={classes.book}>
+                Book Here!
+              </a>
             </Button>
           </CardActions>
         </CardContent>
