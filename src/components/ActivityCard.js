@@ -79,7 +79,7 @@ const ActivityCard = ({
 
   const addToTravelboard = () => {
     setClickedFav(!clickedFav);
-    setOpen(true);
+    setOpen(!open);
     setCount(count + 1);
     console.log(count);
     if (count % 2 === 0) {
@@ -90,7 +90,7 @@ const ActivityCard = ({
     setInvisible(false);
   };
 
-  const handleClose = (reason) => {
+  const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
