@@ -72,6 +72,7 @@ const ActivityCard = ({
   removeFromBoard,
 }) => {
   const [clickedFav, setClickedFav] = useState(false);
+  const [count, setCount] = useState(1);
   const [open, setOpen] = useState(false);
   const classes = useStyles();
   const imgSrc = actList.pictures[0];
@@ -79,13 +80,14 @@ const ActivityCard = ({
   const addToTravelboard = () => {
     setClickedFav(!clickedFav);
     setOpen(true);
-    addToBoard(actList);
+    setCount(count + 1);
+    console.log(count);
+    if (count % 2 === 0) {
+      removeFromBoard(actList.id);
+    } else {
+      addToBoard(actList);
+    }
     setInvisible(false);
-  };
-
-  const removeFromTravelboard = () => {
-    setClickedFav(!clickedFav);
-    removeFromBoard(actList.id);
   };
 
   const handleClose = (reason) => {
@@ -126,7 +128,6 @@ const ActivityCard = ({
             <IconButton
               aria-label="add to travelborad"
               onClick={addToTravelboard}
-              onDoubleClick={removeFromTravelboard}
             >
               {clickedFav ? (
                 <FavoriteIcon color="secondary" />
