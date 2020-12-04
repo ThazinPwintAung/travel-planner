@@ -104,7 +104,7 @@ const ActivityCard = ({ actList, addToBoard, setInvisible }) => {
           <Box display={"flex"} alignItems={"center"} mt={2}>
             <Typography className={classes.typography}>
               {actList.price.amount}&nbsp;
-              {actList.price.currencyCode}{" "}
+              {actList.price.currencyCode}
             </Typography>
             <Box display={"flex"} alignItems={"center"}>
               <StarBorderIcon className={classes.star} />

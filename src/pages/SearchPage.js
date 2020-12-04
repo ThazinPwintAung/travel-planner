@@ -18,7 +18,7 @@ const cred = {
   clientSecret: "8FjjGLeQCzbh15Lt",
 };
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   largeIcon: {
     "& svg": {
       fontSize: 30,
