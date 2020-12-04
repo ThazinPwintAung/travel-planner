@@ -21,9 +21,9 @@ export const addToBoard = (act) => {
   };
 };
 
-export const removeFromBoard = (cardId) => {
+export const removeFromBoard = (actId) => {
   return {
     type: actionTypes.REMOVE_FROM_BOARD,
-    payload: cardId,
+    payload: actId,
   };
 };

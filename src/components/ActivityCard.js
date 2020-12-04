@@ -11,7 +11,10 @@ import {
   Snackbar,
 } from "@material-ui/core";
 import React, { useState } from "react";
-import { addToBoard } from "../redux/TravelBoard/travelboard-actions";
+import {
+  addToBoard,
+  removeFromBoard,
+} from "../redux/TravelBoard/travelboard-actions";
 import { connect } from "react-redux";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
@@ -62,7 +65,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ActivityCard = ({ actList, addToBoard, setInvisible }) => {
+const ActivityCard = ({
+  actList,
+  addToBoard,
+  setInvisible,
+  removeFromBoard,
+}) => {
   const [clickedFav, setClickedFav] = useState(false);
   const [open, setOpen] = useState(false);
   const classes = useStyles();
@@ -77,9 +85,10 @@ const ActivityCard = ({ actList, addToBoard, setInvisible }) => {
 
   const removeFromTravelboard = () => {
     setClickedFav(!clickedFav);
+    removeFromBoard(actList.id);
   };
 
-  const handleClose = (event, reason) => {
+  const handleClose = (reason) => {
     if (reason === "clickaway") {
       return;
     }
@@ -153,4 +162,4 @@ const ActivityCard = ({ actList, addToBoard, setInvisible }) => {
   );
 };
 
-export default connect(null, { addToBoard })(ActivityCard);
+export default connect(null, { addToBoard, removeFromBoard })(ActivityCard);
