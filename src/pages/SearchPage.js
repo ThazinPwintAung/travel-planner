@@ -1,6 +1,11 @@
 import { Badge, IconButton, makeStyles } from "@material-ui/core";
 import React, { useState } from "react";
 import Axios from "axios";
+import { connect } from "react-redux";
+import {
+  getActivityLists,
+  getPointsOfInterest,
+} from "../redux/TravelBoard/travelboard-actions";
 import "./SearchPage.css";
 import { useHistory } from "react-router-dom";
 import CardTravelIcon from "@material-ui/icons/CardTravel";
@@ -20,10 +25,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const SearchHeader = () => {
+const SearchHeader = ({
+  activityLists,
+  getActivityLists,
+  pointLists,
+  getPointsOfInterest,
+}) => {
   const [input, setInput] = useState("");
-  const [activityLists, setActivityLists] = useState([]);
-  const [pointLists, setPointLists] = useState([]);
   const [invisible, setInvisible] = useState(true);
   const [toursActive, setToursActive] = useState(true);
   const [interestsActive, setInterestsActive] = useState(false);
@@ -81,10 +89,10 @@ const SearchHeader = () => {
         }
       );
       console.log({ actListResp });
-      setActivityLists(actListResp.data.data);
+      getActivityLists(actListResp.data.data);
 
       const intResp = await Axios.get(
-        `https://test.api.amadeus.com/v1/reference-data/locations/pois?latitude=${geoArr[0].latitude}&longitude=${geoArr[0].longitude}&radius=1&page%5Blimit%5D=20&page%5Boffset%5D=0`,
+        `https://test.api.amadeus.com/v1/reference-data/locations/pois?latitude=${geoArr[0].latitude}&longitude=${geoArr[0].longitude}&radius=10&page%5Blimit%5D=20&page%5Boffset%5D=0`,
         {
           headers: {
             Authorization:
@@ -93,7 +101,7 @@ const SearchHeader = () => {
         }
       );
       console.log({ intResp });
-      setPointLists(intResp.data.data);
+      getPointsOfInterest(intResp.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -111,7 +119,6 @@ const SearchHeader = () => {
         <h2 onClick={routeToHome}>
           Explore<small>.co</small>
         </h2>
-
         <IconButton
           color="primary"
           aria-label="add to board"
@@ -123,6 +130,7 @@ const SearchHeader = () => {
           </Badge>
         </IconButton>
       </div>
+
       <div className="search-header">
         <div className="searchpage-content">
           <h1>Create Your TravelBoard Here</h1>
@@ -140,6 +148,7 @@ const SearchHeader = () => {
           </form>
         </div>
       </div>
+
       {activityLists.length > 0 && (
         <div className="ResultWrapper">
           <div className="categoryMenu nav-menu">
@@ -179,4 +188,15 @@ const SearchHeader = () => {
   );
 };
 
-export default SearchHeader;
+const mapStateToProps = (state) => {
+  console.log("SearchPage: ", state.board);
+  return {
+    activityLists: state.board.activities,
+    pointLists: state.board.pointsOfInterests,
+  };
+};
+
+export default connect(mapStateToProps, {
+  getActivityLists,
+  getPointsOfInterest,
+})(SearchHeader);

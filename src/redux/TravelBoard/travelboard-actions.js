@@ -1,5 +1,19 @@
 import * as actionTypes from "./travelboard-types";
 
+export const getActivityLists = (actLists) => {
+  return {
+    type: actionTypes.ACTIVITY_LISTS,
+    payload: actLists,
+  };
+};
+
+export const getPointsOfInterest = (poiLists) => {
+  return {
+    type: actionTypes.POINTS_OF_INTEREST,
+    payload: poiLists,
+  };
+};
+
 export const addToBoard = (act) => {
   return {
     type: actionTypes.ADD_TO_BOARD,
