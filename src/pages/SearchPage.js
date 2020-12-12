@@ -156,7 +156,7 @@ const SearchHeader = ({
       </div>
 
       {isLoading ? (
-        <div className="loader-container">
+        <div className="container">
           <Loader />
         </div>
       ) : (
@@ -183,11 +183,16 @@ const SearchHeader = ({
                 />
               ))}
             <div className="pointOfInterest">
-              {pointLists.length > 0 &&
+              {pointLists.length > 0 ? (
                 interestsActive &&
                 pointLists.map((list) => (
                   <PointOfInterestCard key={list.id} intList={list} />
-                ))}
+                ))
+              ) : (
+                <div className="container">
+                  <h3>No Results Founded.</h3>
+                </div>
+              )}
             </div>
           </div>
         )

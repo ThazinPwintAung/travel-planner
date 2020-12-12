@@ -36,9 +36,15 @@ const TravelBoard = ({ travelBoard }) => {
       </div>
       <h3>The Activity Lists You've Recently Added To Your Board</h3>
       <div className="TravelBoard">
-        {travelBoard.map((list) => (
-          <TravelBoardCard key={list.id} actList={list} />
-        ))}
+        {travelBoard.length > 0 ? (
+          travelBoard.map((list) => (
+            <TravelBoardCard key={list.id} actList={list} />
+          ))
+        ) : (
+          <div className="container">
+            <h3>You haven't added anything yet.</h3>
+          </div>
+        )}
       </div>
     </div>
   );
