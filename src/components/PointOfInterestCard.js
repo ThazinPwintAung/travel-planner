@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const PointOfInterestCard = ({ intList, setInvisible }) => {
+const PointOfInterestCard = ({ intList }) => {
   const classes = useStyles();
   return (
     <Card className={classes.root}>

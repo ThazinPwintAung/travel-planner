@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom";
 import CardTravelIcon from "@material-ui/icons/CardTravel";
 import ActivityCard from "../components/ActivityCard";
 import PointOfInterestCard from "../components/PointOfInterestCard";
+import Loader from "../components/Loader";
 
 const API_ACCESS_KEY = "9717d5a7bb89147bf20c2d2ebbd33d76";
 const cred = {
@@ -32,10 +33,11 @@ const SearchHeader = ({
   getPointsOfInterest,
 }) => {
   const [input, setInput] = useState("");
-  const [invisible, setInvisible] = useState(true);
-  const [toursActive, setToursActive] = useState(true);
-  const [interestsActive, setInterestsActive] = useState(false);
-  const [safeActive, setSafeActive] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [invisible, setInvisible] = useState(true); //for travel bag red dot (BADGE)
+  const [toursActive, setToursActive] = useState(true); //for css borderline
+  const [interestsActive, setInterestsActive] = useState(false); //for css borderline
+  const [safeActive, setSafeActive] = useState(false); //for css borderline
   const classes = useStyles();
   const history = useHistory();
   const routeToHome = () => history.push("/");
@@ -64,6 +66,7 @@ const SearchHeader = ({
   };
 
   const fetchGeocodeAndActivityList = async () => {
+    setIsLoading(true);
     try {
       const response = await Axios.get(
         `http://api.positionstack.com/v1/forward?access_key=${API_ACCESS_KEY}&query=${input}`
@@ -89,6 +92,7 @@ const SearchHeader = ({
         }
       );
       console.log({ actListResp });
+      setIsLoading(false);
       getActivityLists(actListResp.data.data);
 
       const intResp = await Axios.get(
@@ -101,9 +105,11 @@ const SearchHeader = ({
         }
       );
       console.log({ intResp });
+      setIsLoading(false);
       getPointsOfInterest(intResp.data.data);
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   };
 
@@ -149,40 +155,42 @@ const SearchHeader = ({
         </div>
       </div>
 
-      {activityLists.length > 0 && (
-        <div className="ResultWrapper">
-          <div className="categoryMenu nav-menu">
-            <div className="menu" onClick={toursAndActivities}>
-              <h4 className={tourIsActive}>Tours & Activities</h4>
+      {isLoading ? (
+        <div className="loader-container">
+          <Loader />
+        </div>
+      ) : (
+        activityLists.length > 0 && (
+          <div className="ResultWrapper">
+            <div className="categoryMenu nav-menu">
+              <div className="menu" onClick={toursAndActivities}>
+                <h4 className={tourIsActive}>Tours & Activities</h4>
+              </div>
+              <div className="menu" onClick={pointsOfInterest}>
+                <h4 className={interestIsActive}>Points of Interest</h4>
+              </div>
+              <div className="menu" onClick={safePlaces}>
+                <h4 className={safeIsActive}>Safe Places</h4>
+              </div>
             </div>
-            <div className="menu" onClick={pointsOfInterest}>
-              <h4 className={interestIsActive}>Points of Interest</h4>
-            </div>
-            <div className="menu" onClick={safePlaces}>
-              <h4 className={safeIsActive}>Safe Places</h4>
-            </div>
-          </div>
-          {activityLists.length > 0 &&
-            toursActive &&
-            activityLists.map((list) => (
-              <ActivityCard
-                key={list.id}
-                actList={list}
-                setInvisible={setInvisible}
-              />
-            ))}
-          <div className="pointOfInterest">
-            {pointLists.length > 0 &&
-              interestsActive &&
-              pointLists.map((list) => (
-                <PointOfInterestCard
+            {activityLists.length > 0 &&
+              toursActive &&
+              activityLists.map((list) => (
+                <ActivityCard
                   key={list.id}
-                  intList={list}
+                  actList={list}
                   setInvisible={setInvisible}
                 />
               ))}
+            <div className="pointOfInterest">
+              {pointLists.length > 0 &&
+                interestsActive &&
+                pointLists.map((list) => (
+                  <PointOfInterestCard key={list.id} intList={list} />
+                ))}
+            </div>
           </div>
-        </div>
+        )
       )}
     </div>
   );

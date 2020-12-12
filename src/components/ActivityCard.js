@@ -72,8 +72,8 @@ const ActivityCard = ({
   removeFromBoard,
 }) => {
   const [clickedFav, setClickedFav] = useState(false);
-  const [count, setCount] = useState(1);
-  const [open, setOpen] = useState(false);
+  const [count, setCount] = useState(1); //to remove fav on another click
+  const [open, setOpen] = useState(false); //for snackbar
   const classes = useStyles();
   const imgSrc = actList.pictures[0];
 

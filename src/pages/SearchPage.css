@@ -96,3 +96,10 @@
     transform: translate(0, 0);
   }
 }
+
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
