@@ -139,7 +139,7 @@ const SearchHeader = ({
 
       <div className="search-header">
         <div className="searchpage-content">
-          <h1>Create Your TravelBoard Here</h1>
+          <h1>Ready for your Vacations?</h1>
           <p>
             Search your destination by city name & discover the available tours
             and activities in the region
@@ -147,16 +147,23 @@ const SearchHeader = ({
           <form className="search-bar" onSubmit={onSearchHandler}>
             <input
               type="text"
-              placeholder="eg.Bali"
+              placeholder="eg.Yangon"
+              list="cities"
               value={input}
               onChange={(event) => setInput(event.target.value)}
             />
+            <datalist id="cities">
+              <option value="Yangon"></option>
+              <option value="Bali"></option>
+              <option value="Hanoi"></option>
+              <option value="London"></option>
+            </datalist>
           </form>
         </div>
       </div>
 
       {isLoading ? (
-        <div className="container">
+        <div className="logo-container">
           <Loader />
         </div>
       ) : (
@@ -183,16 +190,11 @@ const SearchHeader = ({
                 />
               ))}
             <div className="pointOfInterest">
-              {pointLists.length > 0 ? (
+              {pointLists.length > 0 &&
                 interestsActive &&
                 pointLists.map((list) => (
                   <PointOfInterestCard key={list.id} intList={list} />
-                ))
-              ) : (
-                <div className="container">
-                  <h3>No Results Founded.</h3>
-                </div>
-              )}
+                ))}
             </div>
           </div>
         )

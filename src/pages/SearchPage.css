@@ -1,10 +1,6 @@
 .search-header {
   width: 100%;
   height: 180px;
-  background-image: url("../assets/cyclist-3202481_1920.jpg");
-  background-position: top;
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 .navbar {
@@ -24,7 +20,6 @@
   font-size: 40px;
   font-weight: 600;
   padding-top: 10px;
-  margin-bottom: 6px;
   letter-spacing: 2px;
   text-shadow: rgba(0, 30, 40, 0) 1px 4px 10px;
 }
@@ -46,7 +41,7 @@
   padding: 5px;
   border: 1px solid var(--blue);
   border-radius: 6px;
-  background-color: var(--gray);
+  background-color: var(--lightblue);
   font-size: 1rem;
   transition: all 200ms ease-in;
 }
@@ -97,12 +92,15 @@
   }
 }
 
-.container {
+.logo-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
-.container h3 {
-  margin-top: 30%;
+.text {
+  color: #33333393;
+  margin-top: 130px !important;
+  margin: auto;
 }

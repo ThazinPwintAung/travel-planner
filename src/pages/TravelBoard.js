@@ -41,9 +41,7 @@ const TravelBoard = ({ travelBoard }) => {
             <TravelBoardCard key={list.id} actList={list} />
           ))
         ) : (
-          <div className="container">
-            <h3>You haven't added anything yet.</h3>
-          </div>
+          <p className="text">You haven't added anything yet.</p>
         )}
       </div>
     </div>
