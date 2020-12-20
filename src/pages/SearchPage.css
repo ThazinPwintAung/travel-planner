@@ -60,6 +60,11 @@
   margin-bottom: 30px;
 }
 
+.SearchPage {
+  width: 100%;
+  height: 100vh;
+}
+
 .pointOfInterest {
   display: flex;
   flex-wrap: wrap;

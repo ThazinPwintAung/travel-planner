@@ -12,6 +12,7 @@ import CardTravelIcon from "@material-ui/icons/CardTravel";
 import ActivityCard from "../components/ActivityCard";
 import PointOfInterestCard from "../components/PointOfInterestCard";
 import Loader from "../components/Loader";
+import PhotosSection from "../components/PhotosSection";
 
 const API_ACCESS_KEY = "9717d5a7bb89147bf20c2d2ebbd33d76";
 const cred = {
@@ -120,7 +121,7 @@ const SearchHeader = ({
   };
 
   return (
-    <div>
+    <div className="SearchPage">
       <div className="navbar">
         <h2 onClick={routeToHome}>
           Explore<small>.co</small>
@@ -147,17 +148,10 @@ const SearchHeader = ({
           <form className="search-bar" onSubmit={onSearchHandler}>
             <input
               type="text"
-              placeholder="eg.Yangon"
-              list="cities"
+              placeholder="eg.London"
               value={input}
               onChange={(event) => setInput(event.target.value)}
             />
-            <datalist id="cities">
-              <option value="Yangon"></option>
-              <option value="Bali"></option>
-              <option value="Hanoi"></option>
-              <option value="London"></option>
-            </datalist>
           </form>
         </div>
       </div>
@@ -166,38 +160,38 @@ const SearchHeader = ({
         <div className="logo-container">
           <Loader />
         </div>
-      ) : (
-        activityLists.length > 0 && (
-          <div className="ResultWrapper">
-            <div className="categoryMenu nav-menu">
-              <div className="menu" onClick={toursAndActivities}>
-                <h4 className={tourIsActive}>Tours & Activities</h4>
-              </div>
-              <div className="menu" onClick={pointsOfInterest}>
-                <h4 className={interestIsActive}>Points of Interest</h4>
-              </div>
-              <div className="menu" onClick={safePlaces}>
-                <h4 className={safeIsActive}>Safe Places</h4>
-              </div>
+      ) : activityLists.length > 0 ? (
+        <div className="ResultWrapper">
+          <div className="categoryMenu nav-menu">
+            <div className="menu" onClick={toursAndActivities}>
+              <h4 className={tourIsActive}>Tours & Activities</h4>
             </div>
-            {activityLists.length > 0 &&
-              toursActive &&
-              activityLists.map((list) => (
-                <ActivityCard
-                  key={list.id}
-                  actList={list}
-                  setInvisible={setInvisible}
-                />
-              ))}
-            <div className="pointOfInterest">
-              {pointLists.length > 0 &&
-                interestsActive &&
-                pointLists.map((list) => (
-                  <PointOfInterestCard key={list.id} intList={list} />
-                ))}
+            <div className="menu" onClick={pointsOfInterest}>
+              <h4 className={interestIsActive}>Points of Interest</h4>
+            </div>
+            <div className="menu" onClick={safePlaces}>
+              <h4 className={safeIsActive}>Safe Places</h4>
             </div>
           </div>
-        )
+          {activityLists.length > 0 &&
+            toursActive &&
+            activityLists.map((list) => (
+              <ActivityCard
+                key={list.id}
+                actList={list}
+                setInvisible={setInvisible}
+              />
+            ))}
+          <div className="pointOfInterest">
+            {pointLists.length > 0 &&
+              interestsActive &&
+              pointLists.map((list) => (
+                <PointOfInterestCard key={list.id} intList={list} />
+              ))}
+          </div>
+        </div>
+      ) : (
+        <PhotosSection />
       )}
     </div>
   );

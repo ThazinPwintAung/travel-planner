@@ -1,10 +1,8 @@
 import {
-  Button,
   Card,
   CardActionArea,
   CardContent,
   CardMedia,
-  IconButton,
   makeStyles,
   Typography,
 } from "@material-ui/core";
