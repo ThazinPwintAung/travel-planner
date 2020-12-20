@@ -1,5 +1,5 @@
 .PhotosSection {
-  margin: 0 12vw;
+  margin: 3vh 12vw;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-auto-rows: 150px 250px;
@@ -79,4 +79,21 @@
 }
 .h-2 {
   grid-row: span 2;
+}
+
+@media only screen and (max-width: 500px) {
+  .PhotosSection {
+    margin: 0 12vw;
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .w-1,
+  .w-2 {
+    grid-column: span 1;
+  }
+
+  .h-1,
+  .h-2 {
+    grid-row: span 2;
+  }
 }

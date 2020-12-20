@@ -1,5 +1,6 @@
 .delete {
-  color: var(--lightblue);
+  color: var(--darkblue);
+  opacity: 9;
   position: absolute;
   top: 0;
   right: 0;

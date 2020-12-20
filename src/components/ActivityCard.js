@@ -8,7 +8,6 @@ import {
   Typography,
   Box,
   Button,
-  // Snackbar,
 } from "@material-ui/core";
 import React, { useState } from "react";
 import {
@@ -19,11 +18,6 @@ import { connect, useSelector } from "react-redux";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-// import MuiAlert from "@material-ui/lab/Alert";
-
-// const Alert = (props) => {
-//   return <MuiAlert elevation={6} variant="filled" {...props} />;
-// };
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,7 +63,6 @@ const ActivityCard = ({
   actId,
   actList,
   addToBoard,
-  // setInvisible,
   removeFromBoard,
   setOpenSuccess,
   setOpenWarning,
@@ -77,15 +70,11 @@ const ActivityCard = ({
   const actObj = useSelector((state) =>
     state.board.board.find((act) => act.id === actId)
   );
-  // const [clickedFav, setClickedFav] = useState(false);
   const [count, setCount] = useState(1); //to remove fav on another click
-  // const [open, setOpen] = useState(false); //for snackbar
   const classes = useStyles();
   const imgSrc = actList.pictures[0];
 
   const addToTravelboard = () => {
-    // setClickedFav(!clickedFav);
-    // setOpen(!open);
     setCount(count + 1);
     console.log(count);
     if (count % 2 === 0) {
@@ -95,15 +84,7 @@ const ActivityCard = ({
       addToBoard(actList);
       setOpenSuccess(true);
     }
-    // setInvisible(false);
   };
-
-  // const handleClose = (event, reason) => {
-  //   if (reason === "clickaway") {
-  //     return;
-  //   }
-  //   setOpen(false);
-  // };
 
   return (
     <Card className={classes.root}>
@@ -143,22 +124,6 @@ const ActivityCard = ({
                 <FavoriteBorderIcon />
               )}
             </IconButton>
-            {/* <Snackbar
-              open={open}
-              autoHideDuration={1000}
-              onClose={handleClose}
-              className={classes.snackbar}
-            >
-              {clickedFav ? (
-                <Alert onClose={handleClose} severity="success">
-                  Added to your TravelBoard!
-                </Alert>
-              ) : (
-                <Alert onClose={handleClose} severity="warning">
-                  Removed from your TravelBoard!
-                </Alert>
-              )}
-            </Snackbar> */}
             <Button size="small">
               <a href={actList.bookingLink} className={classes.book}>
                 Book Here!

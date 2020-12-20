@@ -9,7 +9,7 @@ import "./TravelBoard.css";
 const useStyles = makeStyles(() => ({
   largeIcon: {
     "& svg": {
-      fontSize: 35,
+      fontSize: 30,
     },
   },
 }));

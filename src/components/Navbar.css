@@ -4,7 +4,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem 2rem;
+  padding: 2rem 4rem;
 }
 
 .navbar h2 {
@@ -22,7 +22,7 @@
 .menu {
   position: relative;
   cursor: pointer;
-  margin: 20px;
+  margin-left: 40px;
   transition: all 200ms ease-in;
 }
 
@@ -59,4 +59,14 @@
   left: 0;
   margin-left: 0px;
   transition: all 200ms 50ms ease-out;
+}
+
+@media only screen and (max-width: 500px) {
+  .navbar {
+    padding: 2rem 2rem;
+  }
+
+  .menu {
+    margin-left: 20px;
+  }
 }

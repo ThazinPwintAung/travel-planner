@@ -37,7 +37,6 @@ const SearchHeader = ({
 }) => {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  // const [invisible, setInvisible] = useState(true); //for travel bag red dot (BADGE)
   const [toursActive, setToursActive] = useState(true); //for css borderline
   const [interestsActive, setInterestsActive] = useState(false); //for css borderline
   const [safeActive, setSafeActive] = useState(false); //for css borderline
@@ -233,7 +232,6 @@ const SearchHeader = ({
                 actId={list.id}
                 key={list.id}
                 actList={list}
-                // setInvisible={setInvisible}
                 setOpenSuccess={setOpenSuccess}
                 setOpenWarning={setOpenWarning}
               />
