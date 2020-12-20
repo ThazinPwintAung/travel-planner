@@ -1,0 +1,52 @@
+.Card {
+  display: flex;
+  width: 100%;
+  margin: 20px;
+}
+
+.cover {
+  min-width: 300px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1 0 auto;
+}
+
+.typography {
+  font-size: 16px;
+  font-weight: 900;
+  margin-right: 30px;
+  color: #282d36;
+}
+
+.star {
+  color: #282d36;
+}
+
+.book {
+  font-size: 14px;
+  font-weight: 900;
+  color: #0a4e75;
+}
+
+@media only screen and (max-width: 500px) {
+  .Card {
+    min-height: 200px;
+  }
+  .header {
+    font-size: 10px;
+  }
+  .desc,
+  .typography {
+    display: none;
+  }
+
+  .star {
+    color: transparent;
+  }
+}
