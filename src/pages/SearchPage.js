@@ -1,4 +1,4 @@
-import { Badge, IconButton, makeStyles } from "@material-ui/core";
+import { Badge, IconButton, makeStyles, Snackbar } from "@material-ui/core";
 import React, { useState } from "react";
 import Axios from "axios";
 import { connect } from "react-redux";
@@ -13,6 +13,7 @@ import ActivityCard from "../components/ActivityCard";
 import PointOfInterestCard from "../components/PointOfInterestCard";
 import Loader from "../components/Loader";
 import PhotosSection from "../components/PhotosSection";
+import Alert from "@material-ui/lab/Alert";
 
 const API_ACCESS_KEY = "9717d5a7bb89147bf20c2d2ebbd33d76";
 const cred = {
@@ -40,6 +41,10 @@ const SearchHeader = ({
   const [toursActive, setToursActive] = useState(true); //for css borderline
   const [interestsActive, setInterestsActive] = useState(false); //for css borderline
   const [safeActive, setSafeActive] = useState(false); //for css borderline
+
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openWarning, setOpenWarning] = useState(false);
+
   const classes = useStyles();
   const history = useHistory();
   const routeToHome = () => history.push("/");
@@ -48,6 +53,19 @@ const SearchHeader = ({
   let tourIsActive = toursActive ? "active" : "";
   let interestIsActive = interestsActive ? "active" : "";
   let safeIsActive = safeActive ? "active" : "";
+
+  const handleCloseSuccess = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSuccess(false);
+  };
+  const handleCloseWarning = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenWarning(false);
+  };
 
   const toursAndActivities = () => {
     setToursActive(true);
@@ -123,6 +141,36 @@ const SearchHeader = ({
 
   return (
     <div className="SearchPage">
+      <Snackbar
+        anchorOrigin={{ horizontal: "center", vertical: "top" }}
+        open={openSuccess}
+        autoHideDuration={3000}
+        onClose={handleCloseSuccess}
+      >
+        <Alert
+          onClose={handleCloseSuccess}
+          severity="success"
+          elevation={6}
+          variant="filled"
+        >
+          Added to your TravelBoard!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        anchorOrigin={{ horizontal: "center", vertical: "top" }}
+        open={openWarning}
+        autoHideDuration={3000}
+        onClose={handleCloseWarning}
+      >
+        <Alert
+          onClose={handleCloseWarning}
+          severity="warning"
+          elevation={6}
+          variant="filled"
+        >
+          Removed from your TravelBoard!
+        </Alert>
+      </Snackbar>
       <div className="navbar">
         <h2 onClick={routeToHome}>
           Explore<small>.co</small>
@@ -186,6 +234,8 @@ const SearchHeader = ({
                 key={list.id}
                 actList={list}
                 // setInvisible={setInvisible}
+                setOpenSuccess={setOpenSuccess}
+                setOpenWarning={setOpenWarning}
               />
             ))}
           <div className="pointOfInterest">
