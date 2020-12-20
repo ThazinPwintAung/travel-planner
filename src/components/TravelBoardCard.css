@@ -1,0 +1,12 @@
+.delete {
+  color: var(--lightblue);
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 8px;
+  transition: all 2s ease-out;
+}
+
+.delete:hover {
+  transform: scale(1.2);
+}

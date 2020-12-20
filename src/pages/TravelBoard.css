@@ -1,0 +1,31 @@
+.TravelBoard {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 15vw;
+  margin-right: 15vw;
+  margin-bottom: 30px;
+}
+
+.TravelBoard {
+  opacity: 0;
+  transform: translate(0, 150px);
+  animation: fadeUp 350ms 150ms ease-out forwards;
+}
+
+h3 {
+  margin-left: 15vw;
+  margin-bottom: 10px;
+  font-size: 10;
+  color: var(--lightblue);
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translate(0, 150px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
