@@ -182,6 +182,7 @@ const SearchHeader = ({
             toursActive &&
             activityLists.map((list) => (
               <ActivityCard
+                actId={list.id}
                 key={list.id}
                 actList={list}
                 // setInvisible={setInvisible}

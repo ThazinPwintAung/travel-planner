@@ -15,7 +15,7 @@ import {
   addToBoard,
   removeFromBoard,
 } from "../redux/TravelBoard/travelboard-actions";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
@@ -66,19 +66,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ActivityCard = ({
+  actId,
   actList,
   addToBoard,
   // setInvisible,
   removeFromBoard,
 }) => {
-  const [clickedFav, setClickedFav] = useState(false);
+  const actObj = useSelector((state) =>
+    state.board.board.find((act) => act.id === actId)
+  );
+  // const [clickedFav, setClickedFav] = useState(false);
   const [count, setCount] = useState(1); //to remove fav on another click
   const [open, setOpen] = useState(false); //for snackbar
   const classes = useStyles();
   const imgSrc = actList.pictures[0];
 
   const addToTravelboard = () => {
-    setClickedFav(!clickedFav);
+    // setClickedFav(!clickedFav);
     setOpen(!open);
     setCount(count + 1);
     console.log(count);
@@ -129,7 +133,7 @@ const ActivityCard = ({
               aria-label="add to travelborad"
               onClick={addToTravelboard}
             >
-              {clickedFav ? (
+              {actObj ? (
                 <FavoriteIcon color="secondary" />
               ) : (
                 <FavoriteBorderIcon />
@@ -141,7 +145,7 @@ const ActivityCard = ({
               onClose={handleClose}
               className={classes.snackbar}
             >
-              {clickedFav ? (
+              {/* {clickedFav ? (
                 <Alert onClose={handleClose} severity="success">
                   Added to your TravelBoard!
                 </Alert>
@@ -149,7 +153,7 @@ const ActivityCard = ({
                 <Alert onClose={handleClose} severity="warning">
                   Removed from your TravelBoard!
                 </Alert>
-              )}
+              )} */}
             </Snackbar>
             <Button size="small">
               <a href={actList.bookingLink} className={classes.book}>
