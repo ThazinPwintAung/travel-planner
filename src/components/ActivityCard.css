@@ -20,12 +20,12 @@
 .typography {
   font-size: 16px;
   font-weight: 900;
-  margin-right: 30px;
   color: #282d36;
 }
 
 .star {
   color: #282d36;
+  margin-left: 20px;
 }
 
 .book {
@@ -38,14 +38,10 @@
   .Card {
     min-height: 200px;
   }
-  .header {
-    font-size: 10px;
-  }
   .desc,
   .typography {
     display: none;
   }
-
   .star {
     color: transparent;
   }
