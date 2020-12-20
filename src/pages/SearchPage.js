@@ -32,10 +32,11 @@ const SearchHeader = ({
   getActivityLists,
   pointLists,
   getPointsOfInterest,
+  savedBoardList,
 }) => {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [invisible, setInvisible] = useState(true); //for travel bag red dot (BADGE)
+  // const [invisible, setInvisible] = useState(true); //for travel bag red dot (BADGE)
   const [toursActive, setToursActive] = useState(true); //for css borderline
   const [interestsActive, setInterestsActive] = useState(false); //for css borderline
   const [safeActive, setSafeActive] = useState(false); //for css borderline
@@ -132,7 +133,11 @@ const SearchHeader = ({
           className={classes.largeIcon}
           onClick={routeToTravelboard}
         >
-          <Badge color="secondary" variant="dot" invisible={invisible}>
+          <Badge
+            color="secondary"
+            badgeContent={savedBoardList.length}
+            invisible={savedBoardList.length === 0}
+          >
             <CardTravelIcon />
           </Badge>
         </IconButton>
@@ -179,7 +184,7 @@ const SearchHeader = ({
               <ActivityCard
                 key={list.id}
                 actList={list}
-                setInvisible={setInvisible}
+                // setInvisible={setInvisible}
               />
             ))}
           <div className="pointOfInterest">
@@ -202,6 +207,7 @@ const mapStateToProps = (state) => {
   return {
     activityLists: state.board.activities,
     pointLists: state.board.pointsOfInterests,
+    savedBoardList: state.board.board,
   };
 };
 

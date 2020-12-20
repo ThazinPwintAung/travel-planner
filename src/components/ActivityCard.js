@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 const ActivityCard = ({
   actList,
   addToBoard,
-  setInvisible,
+  // setInvisible,
   removeFromBoard,
 }) => {
   const [clickedFav, setClickedFav] = useState(false);
@@ -87,7 +87,7 @@ const ActivityCard = ({
     } else {
       addToBoard(actList);
     }
-    setInvisible(false);
+    // setInvisible(false);
   };
 
   const handleClose = (event, reason) => {
