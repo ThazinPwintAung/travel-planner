@@ -8,22 +8,22 @@ import {
   Typography,
   Box,
   Button,
-  Snackbar,
+  // Snackbar,
 } from "@material-ui/core";
 import React, { useState } from "react";
 import {
   addToBoard,
   removeFromBoard,
 } from "../redux/TravelBoard/travelboard-actions";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import MuiAlert from "@material-ui/lab/Alert";
+// import MuiAlert from "@material-ui/lab/Alert";
 
-const Alert = (props) => {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-};
+// const Alert = (props) => {
+//   return <MuiAlert elevation={6} variant="filled" {...props} />;
+// };
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,36 +66,44 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ActivityCard = ({
+  actId,
   actList,
   addToBoard,
-  setInvisible,
+  // setInvisible,
   removeFromBoard,
+  setOpenSuccess,
+  setOpenWarning,
 }) => {
-  const [clickedFav, setClickedFav] = useState(false);
+  const actObj = useSelector((state) =>
+    state.board.board.find((act) => act.id === actId)
+  );
+  // const [clickedFav, setClickedFav] = useState(false);
   const [count, setCount] = useState(1); //to remove fav on another click
-  const [open, setOpen] = useState(false); //for snackbar
+  // const [open, setOpen] = useState(false); //for snackbar
   const classes = useStyles();
   const imgSrc = actList.pictures[0];
 
   const addToTravelboard = () => {
-    setClickedFav(!clickedFav);
-    setOpen(!open);
+    // setClickedFav(!clickedFav);
+    // setOpen(!open);
     setCount(count + 1);
     console.log(count);
     if (count % 2 === 0) {
       removeFromBoard(actList.id);
+      setOpenWarning(true);
     } else {
       addToBoard(actList);
+      setOpenSuccess(true);
     }
-    setInvisible(false);
+    // setInvisible(false);
   };
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
-  };
+  // const handleClose = (event, reason) => {
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
+  //   setOpen(false);
+  // };
 
   return (
     <Card className={classes.root}>
@@ -129,13 +137,13 @@ const ActivityCard = ({
               aria-label="add to travelborad"
               onClick={addToTravelboard}
             >
-              {clickedFav ? (
+              {actObj ? (
                 <FavoriteIcon color="secondary" />
               ) : (
                 <FavoriteBorderIcon />
               )}
             </IconButton>
-            <Snackbar
+            {/* <Snackbar
               open={open}
               autoHideDuration={1000}
               onClose={handleClose}
@@ -150,7 +158,7 @@ const ActivityCard = ({
                   Removed from your TravelBoard!
                 </Alert>
               )}
-            </Snackbar>
+            </Snackbar> */}
             <Button size="small">
               <a href={actList.bookingLink} className={classes.book}>
                 Book Here!

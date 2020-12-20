@@ -3,7 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import TravelBoardCard from "../components/TravelBoardCard";
-import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
+import { Close } from "@material-ui/icons";
 import "./TravelBoard.css";
 
 const useStyles = makeStyles(() => ({
@@ -18,7 +18,7 @@ const TravelBoard = ({ travelBoard }) => {
   const classes = useStyles();
   const history = useHistory();
   const routeToHome = () => history.push("/");
-  const routeToTravelboard = () => history.push("/searchpage");
+  const routeToTravelboard = () => history.goBack();
   return (
     <div>
       <div className="navbar">
@@ -31,7 +31,7 @@ const TravelBoard = ({ travelBoard }) => {
           className={classes.largeIcon}
           onClick={routeToTravelboard}
         >
-          <KeyboardBackspaceIcon />
+          <Close />
         </IconButton>
       </div>
       <h3>The Activity Lists You've Recently Added To Your Board</h3>
